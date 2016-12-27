@@ -7,6 +7,7 @@ from flask import jsonify
 app = Flask(__name__)
 api = Blueprint('api', __name__)
 
+
 @api.route('/funds/', methods=['GET'])
 def get_funds():
     json_list = {
