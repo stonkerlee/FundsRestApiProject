@@ -9,17 +9,6 @@ import urllib2
 # URL='http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&st=asc&pi=1&pn=1'
 
 
-def get_funds():
-    url = 'http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&st=asc&pi=1&pn=5000'
-    content = urllib2.urlopen(url).read()
-    raw_data = convert_content_to_raw_data(content)
-    return convert_raw_data_to_funds(raw_data)
-
-
-def get_fund(fund_id):
-    pass
-
-
 def convert_content_to_raw_data(content):
     begin = content.find('[')
     end = content.find(']')
@@ -52,6 +41,7 @@ def build_top10_by_type(fund_type):
     return convert_raw_data_to_top10(fund_type, raw_data)
 
 
+# The following are exported APIs
 def get_top10():
     """
     hh = 混合型基金
@@ -61,6 +51,17 @@ def get_top10():
     return [build_top10_by_type('hh'),
             build_top10_by_type('gp'),
             build_top10_by_type('all')]
+
+
+def get_funds():
+    url = 'http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&st=asc&pi=1&pn=5000'
+    content = urllib2.urlopen(url).read()
+    raw_data = convert_content_to_raw_data(content)
+    return convert_raw_data_to_funds(raw_data)
+
+
+def get_fund(fund_id):
+    pass
 
 
 if __name__ == '__main__':
