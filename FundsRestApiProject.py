@@ -16,8 +16,7 @@ def get_funds():
     #     ("001076", "易方达改革红利"),
     #     ("001272", "兴业聚利灵活")
     # ]
-    funds_list = lbf.get_funds()
-    return jsonify(funds_list)
+    return jsonify(lbf.get_funds())
 
 
 @api.route('/funds/top10/', methods=['GET'])
