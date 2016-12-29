@@ -12,7 +12,7 @@ import urllib2
 def convert_content_to_raw_data(content):
     begin = content.find('[')
     end = content.find(']')
-    return content[begin + 2 : end - 1]
+    return unicode(content[begin + 2 : end - 1], encoding='utf-8')
 
 
 def convert_raw_data_to_top10(raw_data):
