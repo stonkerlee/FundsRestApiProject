@@ -15,13 +15,13 @@ def convert_content_to_raw_data(content):
     return content[begin + 2 : end - 1]
 
 
-def convert_raw_data_to_top10(fund_type, raw_data):
+def convert_raw_data_to_top10(raw_data):
     result = []
     for fund_str in raw_data.split('","'):
         fund = fund_str.split(',')
         # fund[0] = fund id, fund[1] = fund name, fund[3] = 日期, fund[14] = 今年涨幅
         result.append((fund[0], fund[1], fund[14]))
-    return {fund_type: result}
+    return result
 
 
 def convert_raw_data_to_funds(raw_data):
@@ -33,12 +33,12 @@ def convert_raw_data_to_funds(raw_data):
     return result
 
 
-def build_top10_by_type(fund_type):
+def get_top10_by_type(fund_type):
     url_template = 'http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft={0}&sc=jnzf&st=desc&pi=1&pn=10&dx=1'
     url = url_template.format(fund_type)
     content = urllib2.urlopen(url).read()
     raw_data = convert_content_to_raw_data(content)
-    return convert_raw_data_to_top10(fund_type, raw_data)
+    return {fund_type: convert_raw_data_to_top10(raw_data)}
 
 
 # The following are exported APIs
@@ -48,9 +48,11 @@ def get_top10():
     gp = 股票型基金
     all = 所以类型基金
     """
-    return [build_top10_by_type('hh'),
-            build_top10_by_type('gp'),
-            build_top10_by_type('all')]
+    result = {}
+    result.update(get_top10_by_type('hh'))
+    result.update(get_top10_by_type('gp'))
+    result.update(get_top10_by_type('all'))
+    return result
 
 
 def get_funds():
@@ -65,5 +67,5 @@ def get_fund(fund_id):
 
 
 if __name__ == '__main__':
-    print get_funds()
-    # print get_top10()
+    # print get_funds()
+    print get_top10()
