@@ -24,6 +24,11 @@ def get_top10():
     return jsonify(lbf.get_top10())
 
 
+@api.route('/funds/top10/<fund_type>', methods=['GET'])
+def get_top10_by_type(fund_type):
+    return jsonify(lbf.get_top10_by_type(fund_type))
+
+
 if __name__ == '__main__':
     app.config['JSON_AS_ASCII'] = False
     app.config['JSONIFY_MIMETYPE'] = 'application/json; charset=utf-8'
